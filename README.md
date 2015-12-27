@@ -5,7 +5,7 @@ One example use of this service is exposing an HTTP endpoint for services hosted
 
 ## Configuration
 
-Change the appSettings values in app.config to match your scenario:
+Change the following values in httpforward.exe.config to match your scenario:
 
 ```xml
 <appSettings>
