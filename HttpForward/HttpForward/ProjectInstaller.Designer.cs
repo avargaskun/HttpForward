@@ -28,8 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.eventLogInstaller1 = new System.Diagnostics.EventLogInstaller();
             this.serviceProcessInstaller1 = new System.ServiceProcess.ServiceProcessInstaller();
             this.serviceInstaller1 = new System.ServiceProcess.ServiceInstaller();
+            // 
+            // eventLogInstaller1
+            // 
+            this.eventLogInstaller1.Log = "Application";
+            this.eventLogInstaller1.Source = "HttpForward";
             // 
             // serviceProcessInstaller1
             // 
@@ -53,6 +59,7 @@
 
         #endregion
 
+        private System.Diagnostics.EventLogInstaller eventLogInstaller1;
         private System.ServiceProcess.ServiceProcessInstaller serviceProcessInstaller1;
         private System.ServiceProcess.ServiceInstaller serviceInstaller1;
     }

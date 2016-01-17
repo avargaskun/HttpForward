@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -9,23 +10,21 @@ namespace HttpForward
 {
     public static class Log
     {
-        public static TextWriter Out { get; set; } = new StreamWriter(File.Open(GetLogFilename(), FileMode.Create, FileAccess.ReadWrite, FileShare.Read));
+        public static EventLog EventLog { get; set; }
 
-        public static void Debug(string message)
+        public static void Error(string message)
         {
-            Out.WriteLine($"[{DateTime.Now:G}] {message}");
-            Out.Flush();
+            EventLog.WriteEntry(message, EventLogEntryType.Error);
         }
 
-        public static string GetLogFilename()
+        public static void Warning(string message)
         {
-            string my = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            if (my != null && Directory.Exists(my))
-            {
-                return Path.Combine(my, "HttpForward.log");
-            }
+            EventLog.WriteEntry(message, EventLogEntryType.Warning);
+        }
 
-            return Path.GetTempFileName();
+        public static void Info(string message)
+        {
+            EventLog.WriteEntry(message, EventLogEntryType.Information);
         }
     }
 }

@@ -11,6 +11,11 @@ namespace HttpForward
     {
         private Listener listener;
 
+        public Service()
+        {
+            this.InitializeComponent();
+        }
+
         public static void Install()
         {
             ManagedInstallerClass.InstallHelper(new[] { Assembly.GetExecutingAssembly().Location });
@@ -23,7 +28,6 @@ namespace HttpForward
 
         public void RunLocal(string[] args)
         {
-            Log.Out = Console.Out;
             this.OnStart(args);
             Console.WriteLine("Press a key to exit ...");
             Console.ReadKey();
@@ -32,7 +36,8 @@ namespace HttpForward
 
         protected override void OnStart(string[] args)
         {
-            Log.Debug("HttpForward service starting ...");
+            Log.EventLog = this.eventLog;
+            Log.Info("HttpForward service starting ...");
 
             try
             {
@@ -45,7 +50,7 @@ namespace HttpForward
             }
             catch (Exception e)
             {
-                Log.Debug($"Could not start service with {e.GetType().Name}: {e.Message}");
+                Log.Error($"Could not start service with {e.GetType().Name}: {e.Message}");
                 throw;
             }
         }
@@ -54,7 +59,7 @@ namespace HttpForward
         {
             this.listener.StopListening();
             this.listener.Dispose();
-            Log.Debug("SendVideo service stopping ...");
+            Log.Info("HttpForward service stopping ...");
         }
     }
 }

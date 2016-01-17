@@ -47,8 +47,9 @@ namespace HttpForward
                     var context = await this.listener.GetContextAsync();
                     this.HandleRequest(context);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    Log.Warning($"Error getting request context {e.GetType().Name}: {e.Message}");
                 }
             }
         }
@@ -113,8 +114,9 @@ namespace HttpForward
 
                 context.Response.Close();
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Log.Warning($"Error handling request {e.GetType().Name}: {e.Message}");
                 context.Response.Abort();
             }
             finally
